@@ -1,0 +1,24 @@
+/* You can add global styles to this file, and also import other style files */
+@import "node_modules/bootstrap/scss/bootstrap.scss";
+
+@import "node_modules/bootstrap-icons/font/bootstrap-icons.css";
+
+
+@import url('https://fonts.googleapis.com/css2?family=Fredoka:wdth,wght@97.3,300..700&family=Rubik:ital,wght@0,300..900;1,300..900&display=swap');
+
+@import 'ngx-toastr/toastr';
+
+@import "@ng-select/ng-select/themes/material.theme.css";
+
+*{
+    padding: 0;
+    margin: 0;
+}
+
+html, body { height: 100vh; }
+body { margin: 0; font-family: Rubik, "Helvetica Neue", sans-serif; }
+
+
+.ng-option-selected{
+    background:lightyellow!important;
+ }
