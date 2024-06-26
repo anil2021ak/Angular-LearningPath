@@ -1,0 +1,366 @@
+
+<div class="container-fluid mt-3">
+  <div class="row">
+    <div class="col-sm-12">
+      <div class="d-flex flex-row justify-content-between mb-3">
+         <div class="">
+          <h5 class="mb-0">My Skills</h5>
+          <span
+            class="text-primary fw-bold"
+            >5/1000</span>
+         </div>
+
+
+          <div>
+            <ul class="headlist d-flex">
+              <li>
+                <input
+                type="text"
+                placeholder="Search by Skill"
+                class="form-control navinput"
+                id="skill"
+                name="searchView"
+                [(ngModel)]="searchView"
+              />
+              </li>
+
+              <li>
+                <button (click)="openModel(content)" class="btn createbtn ms-5">
+                  <i class="bi bi-plus-circle me-2"></i>Create Skill
+                </button>
+              </li>
+            </ul>
+          </div>
+
+    </div>
+  </div>
+
+  <!-- Favourites Data -->
+
+  <div class="">
+    <h4>Favourites</h4>
+  </div>
+
+  <ng-container *ngIf="(favouriteSkills | skill : searchView) as result">
+    <div class="row">
+      <div
+        class="col-md-5 col-lg-4 col-xl-3 p-xxl-5  text-center gy-3"
+        *ngFor="let res of result; let i = index"
+      >
+        <div class="card p-4 ">
+          <div class="d-flex">
+            <span class="badge rounded-pill cardbadge p-2">v.1.0.0 Dev</span>
+            <i class="bi bi-info-circle ms-2"></i>
+            <div class="ms-auto">
+              <i
+                class="bi bi-pin-fill favPinIcon me-2"
+                (click)="sendtoFav(res, false)"
+              ></i>
+              <i
+                [matMenuTriggerFor]="menu"
+                class="bi bi-three-dots-vertical"
+              ></i>
+            </div>
+
+            <!-- Material Menu -->
+
+            <mat-menu #menu="matMenu">
+              <button mat-menu-item>
+                <span
+                  ><i
+                    (click)="EditopenModel(content, res)"
+                    class="bi bi-pencil-fill"
+                  ></i>
+                  Edit</span
+                >
+              </button>
+
+              <button
+                (click)="isDeleteData = res; openModel(deletecontent)"
+                mat-menu-item
+              >
+                <span><i class="bi bi-trash text-danger"></i> Delete</span>
+              </button>
+            </mat-menu>
+          </div>
+          <div class="card-body">
+            <img
+              [src]="res.pic ? res.pic : 'assets/images/img6.jpg'"
+              class="avatar card-img"
+              [alt]="res.name"
+            />
+            <h5 class="card-title mt-2">{{ res.name }}</h5>
+            <span class="card-text"> Created by </span>
+            <p class="name">{{ res.created_by }}</p>
+            <span class="datetxt">Updated on {{ res.updated_on | date }}</span>
+            <div class="d-flex">
+              <div class="x-line m-3"></div>
+
+              <div
+                *ngIf="res.shared_users.length >= 1; else user"
+                class="linetxt me-1"
+              >
+                User
+              </div>
+              <ng-template #user>
+                <div class="linetxt me-1">Users</div>
+              </ng-template>
+
+              <span class="badge usersbadge">{{
+                res.shared_users.length
+              }}</span>
+              <div class="x-line m-3"></div>
+            </div>
+            <div class="usersList">
+              <a
+                *ngFor="let i of res.shared_users"
+                matTooltip="{{ i.username }}"
+                matTooltipPosition="above"
+                class="avatar avatar-circle avatar-sm"
+                ><img
+                  class="avatar-img"
+                  [src]="
+                    i.profile_pic ? i.profile_pic : 'assets/images/img6.jpg'
+                  "
+                  alt=""
+              /></a>
+            </div>
+          </div>
+
+          <div class="card-footer bg-white">
+            <div class="d-flex flex-row justify-content-center txtfoot">
+              <div class="me-4">
+                <span class="cardspantxt">{{ res.domains.length }}</span>
+                <p>Domain</p>
+              </div>
+              <div class="vl"></div>
+              <div class="ms-4">
+                <span class="cardspantxt">{{ res.languages.length }}</span>
+                <p>Languages</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div *ngIf="result.length === 0">
+        <p>No Skills Available</p>
+      </div>
+    </div>
+  </ng-container>
+
+  <!-- SkillsData -->
+
+  <div class="mt-3">
+    <h4>All Skills</h4>
+  </div>
+
+  <ng-container *ngIf="skillData | skill : searchView as result"> 
+    <div class="row">
+      <div
+        *ngFor="let res of result; index as i"
+        class="col-md-5 col-lg-4 col-xl-3 p-xxl-5 text-center gy-3"
+      >
+        <div class="card p-4 ">
+          <div class="d-flex">
+            <span class="badge rounded-pill cardbadge p-2"
+              >v.{{ res.version_number }} {{ res.state | titlecase }}</span
+            >
+            <i class="bi bi-info-circle ms-2"></i>
+            <div class="ms-auto">
+              <i
+                class="bi bi-pin-fill favPinIcon me-2"
+                id="favPinIconid"
+                (click)="sendtoFav(res, true)"
+              ></i>
+              <i
+                [matMenuTriggerFor]="menu"
+                class="bi bi-three-dots-vertical"
+              ></i>
+            </div>
+
+            <!-- Material Menu -->
+
+            <mat-menu #menu="matMenu">
+              <button (click)="EditopenModel(content, res)" mat-menu-item>
+                <span><i class="bi bi-pencil-fill"></i> Edit</span>
+              </button>
+
+              <button
+                (click)="isDeleteData = res; openModel(deletecontent)"
+                mat-menu-item
+              >
+                <span><i class="bi bi-trash text-danger"></i> Delete</span>
+              </button>
+            </mat-menu>
+          </div>
+          <div class="card-body">
+            <img
+              [src]="res.pic ? res.pic : 'assets/images/img6.jpg'"
+              class="avatar card-img"
+              [alt]="res.name"
+            />
+            <h5 class="card-title mt-2">{{ res.name }}</h5>
+            <span class="card-text"> Created by </span>
+            <p class="name">{{ res.created_by }}</p>
+            <span class="datetxt">Updated on {{ res.updated_on | date }}</span>
+            <div class="d-flex">
+              <div class="x-line m-3"></div>
+
+              <div
+                *ngIf="res.shared_users.length >= 1; else user"
+                class="linetxt me-1"
+              >
+                User
+              </div>
+              <ng-template #user>
+                <div class="linetxt me-1">Users</div>
+              </ng-template>
+
+              <span class="badge usersbadge">{{
+                res.shared_users.length
+              }}</span>
+              <div class="x-line m-3"></div>
+            </div>
+            <div class="usersList">
+              <a
+                *ngFor="let i of res.shared_users"
+                matTooltip="{{ i.username }}"
+                matTooltipPosition="above"
+                class="avatar avatar-circle avatar-sm"
+                ><img
+                  class="avatar-img"
+                  [src]="
+                    i.profile_pic ? i.profile_pic : 'assets/images/img6.jpg'
+                  "
+                  alt=""
+              /></a>
+            </div>
+          </div>
+          <hr />
+          <div class="d-flex flex-row justify-content-center txtfoot">
+            <div class="me-4">
+              <span class="cardspantxt">{{ res.domains.length }}</span>
+              <p>Domain</p>
+            </div>
+            <div class="vl"></div>
+            <div class="ms-4">
+              <span class="cardspantxt">{{ res.languages.length }}</span>
+              <p>Languages</p>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div *ngIf="result.length === 0">
+        <p>No Skills Available</p>
+      </div>
+    </div>
+  </ng-container>
+
+
+<!--Material Model as Form -->
+
+<ng-template #content let-c="close" let-d="dismiss">
+  <div class="modal-header">
+    <h4 class="modal-title" id="modal-basic-title">Create Skill Card</h4>
+    <button
+      type="button"
+      class="btn-close"
+      id="close"
+      aria-label="Close"
+      (click)="d('Cross click')"
+    ></button>
+  </div>
+  <form [formGroup]="skillForm">
+    <div class="modal-body">
+      <div class="mb-2">
+        <label>Skill Name</label>
+        <input
+          [class.is-invalid]="
+            skillForm.controls['skillName'].invalid &&
+            skillForm.controls['skillName'].touched
+          "
+          formControlName="skillName"
+          type="text"
+          class="form-control"
+        />
+        <span
+          *ngIf="
+            skillForm.controls['skillName'].invalid &&
+            skillForm.controls['skillName'].touched
+          "
+          class="text-danger"
+          >*Required</span
+        >
+      </div>
+      <div class="mb-2">
+        <label>Skill Description</label>
+        <textarea
+          [class.is-invalid]="
+            skillForm.controls['skillDescription'].invalid &&
+            skillForm.controls['skillDescription'].touched
+          "
+          formControlName="skillDescription"
+          type="text"
+          class="form-control"
+        ></textarea>
+        <span
+          *ngIf="
+            skillForm.controls['skillDescription'].invalid &&
+            skillForm.controls['skillDescription'].touched
+          "
+          class="text-danger"
+          >*Required</span
+        >
+      </div>
+      <div class="mb-2">
+        <label>Skill Pic</label>
+        <input type="file" class="form-control" (change)="onUpload($event)" />
+      </div>
+      <div class="mb-2">
+        <label>Created By</label>
+        <input formControlName="createdby" type="text" class="form-control" />
+      </div>
+    </div>
+  </form>
+  <div class="modal-footer">
+    <button
+      type="button"
+      [disabled]="skillForm.invalid"
+      class="btn btn-outline-dark"
+      (click)="savedata()"
+    >
+      Save
+    </button>
+  </div>
+</ng-template>
+
+<!-- Material Model as Alert -->
+
+<ng-template #deletecontent let-c="close" let-d="dismiss">
+  <div class="modal-header">
+    <h4 class="modal-title" id="modal-basic-title">Delete Skill</h4>
+    <button
+      type="button"
+      class="btn-close"
+      id="close" q
+      aria-label="Close"
+      (click)="d('Cross click')"
+    ></button>
+  </div>
+  <div class="modal-body">
+    <h3>Are you sure want to delete this item ?</h3>
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-primary" (click)="d('Cross click')">
+      No
+    </button>
+    <button type="button" class="btn btn-danger" (click)="deleteSkilldata()">
+      Yes
+    </button>
+  </div>
+</ng-template>
+</div>
+
+
+
+

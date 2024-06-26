@@ -1,0 +1,153 @@
+
+.headtext{
+    font-size: 15px;
+}
+.createFont{
+    font-size: 12px;
+}
+
+.list-inline{
+    border-radius: 25px;
+}
+.selectDomain{
+    border-radius: 30px;
+    width: 250px;
+}
+.sortBy{
+    border-radius: 30px;
+    width: 200px;
+}
+.searchBySkill{
+    border-radius: 30px;
+    width: 200px;
+}
+.importbtn{
+    border-radius: 25px;
+    width: 120px;
+    font-size: 14px;
+    padding: 8px;
+}
+.createbtn{
+    border-radius: 25px;
+    width: 120px;
+    font-size: 14px;
+    padding: 8px;
+    
+}
+.card{
+    height: 100%;
+    width: 18rem;
+    box-shadow: 0 4px 8px 0 rgba(55, 55, 55, 0.2), 0 6px 20px 0 rgba(103, 103, 103, 0.19);
+    border-width: 1px;
+    
+}
+.versiontxt{
+    font-size: 12px;
+    font-weight: 500;
+    color: rgb(97, 97, 250);
+    background-color: rgb(221, 221, 246);
+    padding: 5px;
+    border-radius: 20px;
+}
+.iIcon{
+    font-size: 12px;
+    margin-left: 6px;
+    
+}
+.favPinIcon{
+    font-size: 18px;
+    color: blue;
+}
+#favPin::before{
+    transform: rotate(40deg);
+}
+.matmenuIcon{
+    height: 15px;
+    font-size: 15px;
+}
+
+
+.avatar {
+    position: relative;
+    display: inline-block;
+    width: 3.625rem;
+    height: 3.625rem;
+    border-radius: 35px;
+    cursor: pointer;
+}
+
+.avatar-circle {
+    border-radius: 50%;
+}
+
+.avatar-img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    -o-object-fit: cover;
+    object-fit: cover;
+    pointer-events: none;
+    border-radius: 50%;
+  }
+
+  .avatar-sm{
+    width: 2rem;
+    height: 2rem;
+  }
+
+
+
+.divider {
+     display: -ms-flexbox;
+    display: flex;
+    -ms-flex-align: center;
+    align-items: center;
+  }
+  
+  .divider::after,
+  .divider::before {
+    -ms-flex: 1 1 0%;
+    flex: 1 1 0%;
+    border-top: 0.0625rem solid rgb(169, 167, 167);
+    content: "";
+    margin-top: 0.0625rem;
+  }
+  
+  .divider::before {
+    margin-right: 1.5rem;
+  }
+  
+  .divider::after {
+    margin-left: 1.5rem;
+  }
+
+ 
+.col-divider{
+    border-left: 3px solid rgb(236, 240, 236);
+    height: 50px;
+}
+.createrName{
+    font-size: 15px;
+    font-weight: bold;
+}
+.usertxt{
+    font-size: 15px;
+    font-weight: 500;
+   
+}
+.footertxt{
+    font-size: 14px;
+    font-weight: 400;
+}
+
+.usersList{
+    display: inline-block;
+    max-width: 200px;
+    overflow: scroll;
+    white-space: nowrap;
+  }
+  .usersList::-webkit-scrollbar {
+      display: none;
+      
+  }
+  

@@ -1,0 +1,119 @@
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-7">
+      <div class="bg-clr">
+        <img class="sideImage" src="assets/images/wbnlu-logo.svg" alt="..." />
+      </div>
+    </div>
+    <div class="col-5 bg-light d-flex flex-column justify-content-between px-5">
+      <div class="Loginmargintop">
+        <div
+          *ngIf="loginErrorMsg"
+          class="alert alert-danger alert-dismissible fade show"
+          role="alert"
+        >
+          {{ loginErrorMsg }}
+        </div>
+        <h3><i class="bi bi-people-fill picon me-3"></i>jabberjet</h3>
+
+        <div class="mt-5">
+          <h5>Hi, Welcome</h5>
+          <span class="text-secondary mt-1">Please Enter Your Details.</span>
+        </div>
+        <form [formGroup]="loginForm" (ngSubmit)="submit(loginForm)">
+          <div class="mt-4">
+            <label class="form-label" for="email"
+              >Email Address <span class="star">*</span></label
+            >
+            <input
+              [class.is-invalid]="
+                loginForm.controls['email'].invalid &&
+                loginForm.controls['email'].touched
+              "
+              placeholder="Enter your Email"
+              id="email"
+              formControlName="email"
+              type="email"
+              class="form-control inputBox"
+            />
+            <small
+              *ngIf="
+                loginForm.controls['email'].invalid &&
+                loginForm.controls['email'].touched
+              "
+              class="text-danger fw-bold"
+              >*Required</small
+            >
+          </div>
+
+          <div>
+            <label class="form-label" for="password"
+              >Password <span class="star">*</span></label>
+
+            <input
+              [class.is-invalid]="
+                loginForm.controls['password'].invalid &&
+                loginForm.controls['password'].touched"
+              id="password"
+              placeholder="Enter your Password"
+              formControlName="password"
+              
+              class="form-control mb-0 inputBox"
+              [type]="Passwordhide ? 'text': 'password'"
+            />
+            
+            <button class="passwordIcon" type="button" (click)="Passwordhide = !Passwordhide">
+                <i class="fa" [ngClass]="{'bi bi-eye-fill': Passwordhide, 'bi bi-eye-slash-fill': !Passwordhide}"></i>
+            </button>
+
+            <small
+              *ngIf="
+                loginForm.controls['password'].invalid &&
+                loginForm.controls['password'].touched
+              "
+              class="text-danger  fw-bold"
+              >*Required</small
+            >
+          </div>
+          <div class="d-flex flex-row justify-content-between mt-2">
+            <div class="form-check form-switch">
+              <input
+                class="form-check-input"
+                type="checkbox"
+                id="flexSwitchCheckChecked"
+                (change)="keepLogin($event)"
+              />
+             
+              <span class="form-check-label ms-2" for="flexSwitchCheckChecked"
+                >Keep Me Signed In</span
+              >
+            </div>
+            <div>
+              <span>Forget Password?</span>
+            </div>
+          </div>
+
+          <div class="text-center mt-3">
+            <button
+              [disabled]="loginForm.invalid"
+              class="btn btn-lg btn-warning loginbtn mb-4"
+              type="submit"
+            >
+              LOG IN
+            </button>
+            <p>
+              Don't have an account yet? <a class="text-dark">Sign up</a> here
+            </p>
+          </div>
+        </form>
+      </div>
+
+      <div class="text-center py-3">
+        <div class="container">
+          <span class="text-black">Powered by nuacem.!</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+

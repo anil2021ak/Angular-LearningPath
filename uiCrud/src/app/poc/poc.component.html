@@ -1,0 +1,172 @@
+<div>
+    <div class="container mt-3">
+        <div class="row">
+          <div class="col">
+              <div>
+                  <h1 class="title">One Way Data Binding:</h1>
+                  <h5 class="sub-title">Interpolation:</h5>
+                  <p>{{ title }}</p>
+                  <p>{{ user.name }}</p>
+                  <p *ngFor="let item of items">{{ item }}</p>
+                  <hr>
+                  <h5 class="sub-title">Property Binding:</h5>
+                  <div [innerHTML]="title"></div>
+      
+                  <button class="btn btn-primary me-3" [disabled]="BindDataProperty">
+                  Click on Button
+                  </button>
+                  <button class="btn btn-primary" disabled="{{ BindDataProperty }}">
+                  Click on Button
+                  </button>
+      
+                  <div class="">
+                      <div class="form-group">
+                          <label class="form-label mt-3" for="comment">Comment:</label>
+                          <input class="form-control" id="comment" name="comment" #comment />
+                      </div>
+                      <button (click)="submit(comment.value)" class="btn btn-info mt-2">
+                          Submit
+                      </button> 
+                      <div *ngFor="let comment of comments">
+                          <div [innerHTML]="comment"></div>
+                          <div>{{ comment }}</div>
+                      </div>
+                  </div>
+      
+                  <hr>
+                  <h5 class="sub-title mt-4">Style Binding:</h5>
+                  <div  [style.color]="textColor">Style Binding</div>
+      
+                  <hr>
+                  <h5 class="sub-title mt-4">Event Binding:</h5>
+                  <button class="btn btn-success" (click)="onClick()">
+                    Click on Button
+                  </button>
+              </div>
+      
+              <hr>
+      
+              <div>
+                  <h1 class="title mt-3">Two Way Data Binding:</h1>
+                  <input class="form-control" type="text" [(ngModel)]="titleTwo" />
+                  <p>Two way Data Binding: {{ titleTwo }}</p>
+              </div>
+      
+              <hr>
+      
+              <div>
+                  <h1 class="title mt-3">Data transfer:</h1>
+                  <h5 class="sub-title mb-3">Using Input Method (Parent to Child):</h5>
+                  <small>Child Component:</small><br>
+                  <!-- <app-child-poc [userData]="user"></app-child-poc> -->
+                <hr>
+      
+                  <h5 class="sub-title mb-3">Using Output Method (Child to Parent):</h5>
+                  <small>Child Component Viewing in parent Component:</small><br>
+                  <app-child-poc (objectEmitted)="handleObject($event)" (messageEvent)="receiveMsg($event)" (buttonClicked)="handleButtonClick()"></app-child-poc>
+                  <br>
+                  <small>Showing Data in Parent Component:</small>
+                  <p>{{msgOutputData}}</p>
+                  <p>{{message}}</p>
+                  <p>{{msgObj | json}}</p>
+                  <hr>
+      
+                  <h5 class="sub-title mb-3">ViewChild:</h5>
+                  <button class="btn btn-success" (click)="logChildMessage()">Message from Child</button>
+                  <h6 class="mb-3">{{viewChildData}}</h6>
+                  <hr>
+      
+                  <h5 class="sub-title mb-3"> USing Angular Shared Service Behaviour Subject :</h5>
+                  <h3>Data: {{data$ | async}}</h3>
+      
+                  <h5 class="sub-title mb-3"> USing Angular Shared Service Subject:</h5>
+                  <button (click)="updateSubData()" class="btn btn-dark mb-3">Update Data</button><br>
+                  <hr>
+      
+                  <!-- <h5 class="sub-title mb-3"> USing Angular Routing :</h5>
+                  <button (click)="navigateWithData()" class="btn btn-warning">Route Data</button> -->
+      
+                  <!-- <hr> -->
+      
+              </div>
+      
+              <div class="row">
+                  <div class="col-6">
+                      <h5>{{parent}}:</h5>
+                      <div>
+                          <label class="form-label" for="">Name:</label>
+                          <input #name class="form-control"/>
+                      </div>
+                      <div>
+                          <label class="form-label" for="">Score:</label>
+                          <input #score class="form-control"/>
+                      </div>
+                      <button  (click)="inputEvent(name.value, score.value)" class="btn btn-success mt-3 mb-3">Click</button>
+                      <h6>{{updateListMsg}}</h6>
+                  </div>
+      
+                  <div class="col-6">
+                      <!-- <app-child-poc  [userData]="user" [nameData]="inputName" [scoreData]="inputScore" [ObjInput]="inputObj"></app-child-poc> -->
+                  </div>
+              </div>
+              <hr>
+      
+              
+      
+              
+              <div>
+                  <h1 class="title mt-3">Using APi Services:</h1>
+                  <h6>{{apiErrorMsg}}</h6>
+      
+                  <button (click)="open(content)" class="btn btn-primary mb-2">+Add</button>
+      
+                  <ng-template #content let-c="close" let-d="dismiss">
+                      <div class="modal-header">
+                          <h4 class="modal-title" id="modal-basic-title">Please Add the Name.!!!</h4>
+                          <button type="button" class="btn-close" aria-label="Close" (click)="d('Cross click')"></button>
+                      </div>
+                      <div class="modal-body">
+                          <form [formGroup]="modalform" (ngSubmit)="savePostData()">
+                              <label class="form-label" for="name">Name: </label>
+                              <input id="name" type="text" formControlName="employeeName" class="form-control"/>
+                              <div class="modal-footer">
+                                  <button type="submit" [disabled]="modalform.invalid"  class="btn btn-outline-dark">{{saveAndUpdateTxt?"Update":"Save"}}</button>
+                              </div>
+                          </form>
+                      </div>
+                  </ng-template>
+                  
+                  <div class="row g-3 mb-3">
+                      @for (item of apiData.slice(0,10); track $index) {
+                          <div class="col-6">
+                                  <div class="card">
+                                      <div class="card-body">
+                                          <div class="d-flex flex-row justify-content-between">
+                                              <h6>{{item.employee_name}}</h6>
+                                              <div>
+                                                  <span (click)="editData(content,item)"><i class="bi bi-pencil-fill text-primary me-4"></i> </span>
+                                                  <span (click)="deleteData(item)"><i class="bi bi-trash-fill text-danger"></i></span>
+                                              </div>
+                                          </div>  
+                                      </div>
+                                  </div>
+                          </div>
+                      }
+                  </div>
+              </div>
+      
+                 
+      
+      
+      
+              </div>
+      
+          </div>
+        </div>
+</div>
+
+
+<hr/>
+
+
+

@@ -1,0 +1,388 @@
+<div class="container mt-3">
+  <div class="row">
+    <div class="col">
+      <div class="card shadow mb-5">
+        <div class="card-body">
+          <div class="d-flex flex-row justify-content-between">
+            <span class="fw-bold h5">Mange Business Hours</span>
+            <button
+                class="btn"
+                type="button"
+                (click)="editBusinessHrsForm()">
+                <mat-icon>edit</mat-icon>
+            </button> 
+          </div>
+          <hr class="" />
+
+          <ng-container *ngIf="businessHours; else editBusinessHours">
+            
+            <div>
+              <div class="row mb-3">
+                <div class="col" >
+                  <div class="form-group">
+                    <small class="form-label"> Business Hours </small>
+                    <h6>{{ businessHrsSavedData?.businessHoursType}}</h6>
+                  </div>
+                </div>
+                <div class="col">
+                  <div class="form-group">
+                    <small class="form-label"> Feedback Message </small>
+                    <h6>{{businessHrsSavedData?.fallBackMessage}}</h6>
+                  </div>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col">
+                  <div class="form-group">
+                    <small class="form-label"> Time Zone </small>
+                    <h6>{{ businessHrsSavedData?.timeZone}}</h6>
+                  </div>
+                </div>
+                <!-- <div class="col"  *ngFor="let day of (businessHrsSavedData.days | keyvalue)">
+                  <div class="form-group">
+                    <small class="form-label"> Days and Time Period </small>
+                    <h6>{{ day.key }}: {{ day.value }}</h6>
+                  </div>
+                </div> -->
+              </div>
+
+              <div class="row mt-2">
+                <div class="text-center">
+                  <table class="table table-striped table-hover">
+                    <thead>
+                      <tr>
+                        <th scope="col">
+                          <div class="table-header">
+                            <span>Day</span>
+                            <i class="bi bi-chevron-expand"></i>
+                          </div>
+                        </th>
+                        <th scope="col">
+                          <div class="table-header">
+                            <span>From</span>
+                            <i class="bi bi-chevron-expand"></i>
+                          </div>
+                        </th>
+                        <th scope="col">
+                          <div class="table-header">
+                            <span>To</span>
+                            <i class="bi bi-chevron-expand"></i>
+                          </div>
+                        </th>
+                        <th scope="col">
+                          <div class="table-header">
+                            <span>Total Hours</span>
+                            <i class="bi bi-chevron-expand"></i>
+                          </div>
+                        </th>
+                      </tr>
+                    </thead>
+                    <tbody class="table-body">
+                      <tr *ngFor="let item of data | keyvalue : unsorted">
+                        <td>{{ item.key }}</td>
+                        <td>{{ getFromTime(item.value) }}</td>
+                        <td>{{ getToTime(item.value) }}</td>
+                        <td>
+                          {{
+                            calculateWorkingHours(
+                              getFromTime(item.value),
+                              getToTime(item.value)
+                            )
+                          }}
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+          </ng-container>
+
+          <ng-template #editBusinessHours>
+            <div>
+              <form [formGroup]="businessHoursForm">
+                <div class="form-group">
+                  <label for="" class="form-label">
+                    Business Hours
+                    <sup
+                      ><em class="bi bi-asterisk required text-danger"></em
+                    ></sup>
+                  </label>
+
+                  <div class="">
+                    <mat-radio-group
+                      aria-label="Select an option"
+                      formControlName="businessHours"
+                    >
+                      <mat-radio-button class="me-3" value="{{businessHrsSavedData.businessHoursType}}" checked
+                        >{{businessHrsSavedData.businessHoursType}}</mat-radio-button
+                      >
+                      <!-- <mat-radio-button class="me-3" value="Daily"
+                        >Daily</mat-radio-button
+                      >
+                      <mat-radio-button value="Weekend"
+                        >Weekends</mat-radio-button
+                      > -->
+                    </mat-radio-group>
+                  </div>
+                </div>
+
+                <div class="form-group">
+                  <label for="timeZone" class="form-label">
+                    Timezone
+                    <sup>
+                      <em class="text-danger bi bi-asterisk required"></em>
+                    </sup>
+                  </label>
+                  <select class="form-select" formControlName="timeZone">
+                    <option disabled selected>Select Timezone</option>
+                    <option value="{{businessHrsSavedData.timeZone}}">{{businessHrsSavedData.timeZone}}</option>
+                    <option value="Asian/Kolkata">Asian/New Delhi</option>
+                    <option value="Asian/Kolkata">Asian/Mumbai</option>
+                  </select>
+
+                  <div class="text-center mt-5">
+                    <table class="table table-striped">
+                      <thead>
+                        <tr>
+                          <th scope="col">
+                            <mat-checkbox
+                              class="list-checkboxes"
+                              (ngModelChange)="handleCheckboxChange($event)"
+                              [(ngModel)]="isCheckall"
+                              [ngModelOptions]="{ standalone: true }"
+                            ></mat-checkbox>
+                          </th>
+                          <th scope="col">
+                            <div class="table-header-items">
+                              <span>Days</span>
+                            </div>
+                          </th>
+
+                          <th scope="col" sortable="desc">
+                            <div class="table-header-items">
+                              <span>From</span>
+                            </div>
+                          </th>
+
+                          <th scope="col">
+                            <div class="table-header-items">
+                              <span>To</span>
+                            </div>
+                          </th>
+                        </tr>
+                      </thead>
+                      <tbody class="table-body">
+                        <tr *ngFor="let item of businesshrsData">
+                          <td>
+                            <mat-checkbox
+                              class="list-checkboxes"
+                              (ngModelChange)="
+                                handleSingleCheckboxChange($event, item)
+                              "
+                              [(ngModel)]="item.isSelected"
+                              [ngModelOptions]="{ standalone: true }">
+                            </mat-checkbox>
+                          </td>
+                          <td>{{ item.day }}</td>
+                          <td>
+                            <div class="input-group">
+                              <ngb-timepicker
+                                name="form"
+                                [(ngModel)]="item.fromtime"
+                                [meridian]="meridian"
+                                [disabled]="!item.isSelected"
+                                [ngModelOptions]="{ standalone: true }"
+                              />
+                            </div>
+                          </td>
+                          <td>
+                            <div class="input-group">
+                              <ngb-timepicker
+                                name="to"
+                                [(ngModel)]="item.totime"
+                                [meridian]="meridian"
+                                [disabled]="!item.isSelected"
+                                [ngModelOptions]="{ standalone: true }"
+                              />
+                            </div>
+                          </td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label for="timeZone" class="form-label">
+                    Feedback Message
+                    <sup
+                      ><em class="text-danger bi bi-asterisk required"></em
+                    ></sup>
+                  </label>
+                  <textarea
+                    formControlName="feedback"
+                    name="feedback"
+                    class="text"
+                    class="form-control"
+                  ></textarea>
+                  <div class="float-end mt-3">
+                    <button (click)="cancel($event)" class="btn btn-lg btn-info me-3">
+                      Cancel
+                    </button>
+                    <button
+                      [disabled]="!businessHoursForm.valid"
+                      (click)="saveData()"
+                      class="btn btn-lg btn-warning"
+                    >
+                      Save
+                    </button>
+                  </div>
+                </div>
+              </form>
+            </div>
+          </ng-template>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+  
+
+
+  <div class="container">
+    <div class="row">
+      <div class="col">
+        <div class="card shadow mb-5">
+          <div class="card-body"> 
+            <div class="d-flex flex-row justify-content-between">
+              <span class="fw-bold h5">Chat Permissions</span>
+              <mat-slide-toggle labelPosition="before" [(ngModel)]="chatWindowData.fullAccess" (ngModelChange)="toggleFullAccess($event)">Full Access</mat-slide-toggle>
+            </div>
+            <hr />
+            <div class="row row-cols-sm-1 row-cols-md-2 row-cols-lg-3 g-3 p-3">
+                <div class="col" *ngFor="let image of chatWindowData.images">
+                    <div class="card p-3 d-flex flex-row justify-content-between align-items-center" >
+                        <div>
+                          <img [src]="'assets/ChatPermisionImgs/' + image.src" alt="{{ image.title }} img"/>
+                          <span class="ms-3 fw-bold">{{ image.title }}</span>
+                        </div>
+                        <mat-slide-toggle [(ngModel)]="image.enabled" (ngModelChange)="toggleChange($event)"></mat-slide-toggle>
+                      </div>
+                </div>
+              
+            </div>
+            <div class="float-end m">
+              <button class="btn btn-lg btn-info me-3" (click)="toggleCancel()">Cancel</button>
+              <button class="btn btn-lg btn-warning" (click)="saveConfigurations()" [disabled]="!disabletoggleBtn()">Save</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  
+
+
+
+  <div class="container mb-5">
+    <div class="row">
+        <div class="col">
+            <div class="card shadow p-4">
+                <div class="card-body">
+                    <div>
+                        <table class="table table-striped">
+                            <thead>
+                                <tr>
+                                    <th scope="col"> <input class="form-check-input" type="checkbox" [(ngModel)]="selectAllChecked" (ngModelChange)="toggleAllCheckboxes($event)"></th>
+                                    <th scope="col">Channels</th>
+                                    <th scope="col">Create</th>
+                                    <th scope="col">Read</th>
+                                    <th scope="col">Update</th>
+                                    <th scope="col">Delete</th>   
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr *ngFor="let channel of channelData; let i = index">
+                                    <th scope="row"><input class="form-check-input" type="checkbox" [(ngModel)]="channel.hasAccess" (change)="toggleCheckbox(i)"></th>
+                                    <td>
+                                        <img [src]="'assets/channelImgs/' + channel.img" [alt]="channel.name" class="me-2" />
+                                        {{ channel.name }}
+                                    </td>
+                                    <td><input class="form-check-input"  type="checkbox" [(ngModel)]="channel.canCreate" [disabled]="!channel.hasAccess"></td>
+                                    <td><input class="form-check-input" type="checkbox" [(ngModel)]="channel.canView" [disabled]="!channel.hasAccess"></td>
+                                    <td><input class="form-check-input" type="checkbox" [(ngModel)]="channel.canUpdate" [disabled]="!channel.hasAccess"></td>
+                                    <td><input class="form-check-input" type="checkbox" [(ngModel)]="channel.canDelete" [disabled]="!channel.hasAccess"></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <div class="float-end mb-3 me-3">
+                            <button (click)="cancelCheckBoxes()" class="btn btn-danger me-2">Cancel</button>
+                            <button class="btn btn-success" (click)="submitChanges()" [disabled]="!disableCheckBoxBtn()" >Submit</button>
+                        </div>      
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+  <div class="container mt-5">
+    <div class="row">
+        <div class="col text-center mb-5">
+            <div class="card shadow p-4">
+                <div class="card-body">
+                    <div>
+                        <ng-template #content let-c="close" let-d="dismiss">
+                            <div class="modal-header">
+                                <h4 class="modal-title" id="modal-basic-title">Profiles.!!!</h4>
+                                <button type="button" class="btn-close" aria-label="Close" (click)="d('Cross click')"></button>
+                            </div>
+                            <div class="modal-body">
+                                <ng-select [items]="memberList"
+                                    class="form-select" 
+                                    bindLabel="name"  
+                                    [(ngModel)]="selecteditems"
+                                    [searchable]="true"
+                                    [multiple]="true"
+                                    [closeOnSelect]="false"
+                                    [clearable]="false"
+                                    [deselectOnClick]="true"
+                                    placeholder="Enter Name">
+
+                                    <ng-template ng-option-tmp let-item="item" let-search="searchTerm">
+                                      <div class="selectGroup d-flex align-items-center p-3">
+                                        <div class="avatar avatar-circle">
+                                          <img class="avatar-img" [src]="item.profilePic ? item.profilePic:'assets/images/img3.jpg'" alt="{{item.name}}"/>
+                                        </div>
+                                        <div>
+                                          <h6 class="ms-3">{{item.name}}</h6>
+                                        </div>
+                                      </div> 
+                                    </ng-template>
+                                </ng-select>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" [disabled]="selecteditems.length === 0" (click)="onSelect()" class="btn btn-outline-dark" (click)="c('Save click')">Save</button>      
+                            </div>
+                        </ng-template>
+
+                        <button class="btn btn-lg btn-outline-primary" (click)="open(content)">Launch Profiles</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+  </div>
+
+
+
+
+
+

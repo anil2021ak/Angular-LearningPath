@@ -1,0 +1,104 @@
+$primaryColor:  rgb(118, 118, 255);
+$whiteColor: white;
+
+.navbartwo{
+    border-width: 0px;
+}
+.navtwotxt::first-line{
+    font-size: 18px;
+    font-weight: 500;
+}
+.navtwotxttwo{
+    color:$primaryColor ;
+    font-weight: 700;
+    font-size: 15px;
+}
+.selectdropdown{
+    border-radius: 25px;
+    width: 200px;
+}
+.navinput{
+    border-radius: 25px;
+    width: 200px;
+}
+.importbtn{
+    background-color: rgb(55, 52, 52);
+    color: $whiteColor;
+    width: 10s0px;
+    border-radius: 25px;
+    font-size: 13px;
+}
+.createbtn{
+    background-color: $primaryColor;
+    color: $whiteColor;
+    width: 10s0px;
+    border-radius: 25px;
+    font-size: 13px;
+}
+.avatar {
+    position: relative;
+    display: inline-block;
+    width: 3.625rem;
+    height: 3.625rem;
+    border-radius: 35px;
+    cursor: pointer;
+}
+
+.avatar-circle {
+    border-radius: 50%;
+}
+
+.avatar-img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    -o-object-fit: cover;
+    object-fit: cover;
+    pointer-events: none;
+    border-radius: 50%;
+  }
+
+  .avatar-sm{
+    width: 2rem;
+    height: 2rem;
+  }
+  
+.x-line{
+    width: 100px;
+    border: 1px solid rgb(197, 195, 195);
+}
+.vl{
+    border-left: 3px solid rgb(236, 240, 236);
+     height: 50px;
+}
+.card{
+    height: 100%;
+    width: 18rem;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+
+.iconSize{
+    font-size: 12px;
+}
+.cardbadge{
+    color: blue;
+    font-weight: 600;
+    font-size: 11px;
+    background-color: rgb(227, 227, 246);;
+}
+
+.headlist{
+    list-style: none;
+}
+.loadMsg{
+    display: flex;
+    align-items: center;
+}
+.center{
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    // -moz-transform: translateX(-50%) translateY(-50%);
+    // -webkit-transform: translateX(-50%) translateY(-50%);
+    // transform: translateX(-50%) translateY(-50%);
+}

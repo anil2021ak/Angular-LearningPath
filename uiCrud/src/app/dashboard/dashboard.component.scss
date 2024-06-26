@@ -1,0 +1,143 @@
+$primaryColor:  rgb(118, 118, 255);
+$whiteColor: white;
+
+
+.navbartwo{
+    border-width: 0px;
+}
+.navtwotxt::first-line{
+    font-size: 18px;
+    font-weight: 500;
+}
+.navtwotxttwo{
+    color:$primaryColor ;
+    font-weight: 700;
+    font-size: 15px;
+}
+.selectdropdown{
+    border-radius: 25px;
+    width: 200px;
+}
+.navinput{
+    border-radius: 25px;
+    width: 200px;
+}
+.importbtn{
+    background-color: rgb(55, 52, 52);
+    color: $whiteColor;
+    width: 10s0px;
+    border-radius: 25px;
+    font-size: 13px;
+}
+.createbtn{
+    background-color: $primaryColor;
+    color: $whiteColor;
+    width: 10s0px;
+    border-radius: 25px;
+    font-size: 13px;
+}
+
+.cardbadge{
+    color: blue;
+    font-weight: 600;
+    font-size: 11px;
+    background-color: rgb(227, 227, 246);;
+}
+.favPinIcon{
+    color: $primaryColor;
+}
+
+#favPinIconid::before{
+    transform: rotate(40deg);
+    // background-color: red;
+}
+
+
+.card-text{
+    font-size: 12px;
+    font-weight: 600;
+}
+.name{
+    font-size: 15px;
+    font-weight: 600;
+    margin: 0;
+}
+.datetxt{
+    font-size: 11px;
+    font-weight: 600;
+}
+.linetxt{
+    font-size: 15px;
+    font-weight: 600;
+}
+.txtfoot{
+    font-size: 13px;
+    font-weight: 600;
+}
+.card{
+    height: 100%;
+    width: 18rem; //300px
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+
+
+.x-line{
+    width: 100px;
+    border: 1px solid rgb(197, 195, 195);
+}
+
+.avatar {
+    position: relative;
+    display: inline-block;
+    width: 3.625rem;
+    height: 3.625rem;
+    border-radius: 35px;
+    cursor: pointer;
+}
+
+.avatar-circle {
+    border-radius: 50%;
+}
+
+.avatar-img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    -o-object-fit: cover;
+    object-fit: cover;
+    pointer-events: none;
+    border-radius: 50%;
+  }
+
+  .avatar-sm{
+    width: 2rem;
+    height: 2rem;
+  }
+
+
+
+.usersbadge{
+    background-color: $primaryColor;
+    height:20px;
+    border-radius: 200px;
+   
+}
+
+.usersList{
+  display: inline-block;
+  max-width: 200px;
+  overflow: scroll;
+  white-space: nowrap;
+}
+.usersList::-webkit-scrollbar {
+    display: none;
+}
+
+.vl{
+    border-left: 3px solid rgb(236, 240, 236);
+     height: 50px;
+}
+
+.headlist{
+    list-style: none;
+}

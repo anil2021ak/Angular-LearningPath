@@ -1,0 +1,30 @@
+<div class="container-fluid mt-5">
+    <div class="row">
+        <div class="col-5">
+            <div class="card inputCard p-3">
+                <div class="card-body">
+                    <form>
+                        <div class="form-group">
+                            <input type="text" #cityName class="form-control mb-3"/>
+                            <button (click)="loadLocations(cityName.value);" type="submit" class="btn btn-primary">Submit</button>
+                        </div>
+                    </form>
+                    <div class="card locationCard p-3 mt-4" *ngFor="let city of Locations;let i = index">
+                        <div (click)="onCardClick(city)"  class="d-flex flex-row justify-content-between">
+                            <h4>{{city}}</h4>
+                            <button (click)="delete(i)" class="btn btn-danger">Delete</button>
+                        </div>          
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="ms-3 col-6">
+            <app-child [city]="cityName" [climate]="climate"  (refreshcurrentLocation)="refresh($event)"></app-child>
+        </div>
+    </div>
+</div>
+
+
+
+

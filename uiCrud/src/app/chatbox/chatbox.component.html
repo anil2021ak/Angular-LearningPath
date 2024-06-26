@@ -1,0 +1,58 @@
+<header class="msger-header mt-5 ms-5">
+  <div class="msger-header-title">
+    <span>SimpleChat</span>
+  </div>
+</header>
+
+<div class="body ms-5">
+  <main class="msger-chat">
+    <ng-container *ngFor="let message of messages">
+      <div
+        class="msg"
+        [ngClass]="{
+          'left-msg': message.sender === 'Bot',
+          'right-msg': message.sender === 'User'
+        }"
+      >
+        <div
+          class="msg-img"
+          [ngClass]="{
+            'msg-bot-img': message.sender === 'Bot',
+            'msg-user-img': message.sender === 'User'
+          }"
+        ></div>
+        <div class="msg-bubble">
+          <div class="d-flex flex-row justify-content-between mb-2">
+            <div class="ms-2 me-2 fw-bold text-black">{{ message.sender }}</div>
+            <div class="msg-info-time text-black">{{ getCurrentTime() }}</div>
+          </div>
+          <div class="msg-text text-black">{{ message.content }}</div>
+        </div>
+      </div>
+    </ng-container>
+  </main>
+
+  <form
+    [formGroup]="userMsgForm"
+    class="msger-inputarea"
+    (ngSubmit)="sendUserMsg()"
+  >
+    <input
+      formControlName="message"
+      autocomplete="off"
+      type="text"
+      class="msger-input"
+      name="input"
+      placeholder="Enter your message..."
+    />
+    <button type="submit" class="ms-1 btn btn-success">Send</button>
+  </form>
+  <button
+    type="button"
+    [routerLink]="['/skills/weather']"
+    routerLinkActive="router-link-active"
+    class="m-5 col-5 btn btn-lg btn-outline-success float-end"
+  >
+    To Weather
+  </button>
+</div>

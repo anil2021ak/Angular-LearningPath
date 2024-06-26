@@ -1,0 +1,21 @@
+.card{
+    width: 20rem;
+    overflow: auto;
+}
+.description{
+    max-height: 50px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space:normal;
+    
+    word-wrap: break-word;
+
+}
+.spincenter{
+    position: absolute;
+    top: 50%;
+    left: 50%;
+}
+.image{
+    background-size: cover;
+}

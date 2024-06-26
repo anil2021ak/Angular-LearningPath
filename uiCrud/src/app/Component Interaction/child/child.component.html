@@ -1,0 +1,43 @@
+<div class="container-fluid mt-5" *ngIf="climate; else noData">
+  <div class="row">
+    <div class="col card p-3 g-3">
+      <div class="card-body">
+        <div class="d-flex flex-row justify-content-between">
+          <h5>Weather Report.!!!</h5>
+          <button (click)="refreshWeatherContent()" class="btn btn-success">Refresh</button>
+        </div>
+        <div class="text-center">
+          <img class="weather-icon" [src]="getWeatherImages(climate.weather[0].main)" alt="{{climate.name}}" class="mainImg"  />
+        </div>
+
+        <h4 class="text-center">{{ climate?.name }}</h4>
+        <div class="d-flex flex-row justify-content-between">
+            <div class="card minicard p-3">
+                <h5>Temp</h5>
+                <h4>{{ climate.main?.temp }}</h4>
+              </div>
+              <div class="card minicard p-3">
+                <h5>Sky</h5>
+                <h4>{{ climate.weather[0].main }}</h4>
+              </div>
+        </div>
+        
+        <div class="d-flex flex-row justify-content-between">
+            <div class="card minicard p-3">
+                <h5>humidity</h5>
+                <h4>{{ climate.wind.speed }}</h4>
+              </div>
+              <div class="card minicard p-3">
+                <h5>Max Temperature</h5>
+                <h4>{{ climate.main?.temp_max }}</h4>
+              </div>
+        </div>
+        
+      </div>
+    </div>
+  </div>
+</div>
+
+<ng-template #noData>
+    <h5 class="text-center mt-5">No Data Available.!  Please Add and Select the City.</h5>
+</ng-template>

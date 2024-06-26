@@ -1,0 +1,494 @@
+
+<main>
+  <!-- Content -->
+  <div class="container-fluid mt-2">
+    <ng-container [ngTemplateOutlet]="displayTemplate"></ng-container>
+
+    <div class="row">
+      <div class="col-lg-12">
+        <!-- Skills Second Header -->
+        <div class="row">
+          <div class="col-auto  headtext">
+            <h5 class="mb-0">My Skills</h5>
+            <span class="text-primary fw-bold">5/1000</span>
+          </div>
+
+          <div class="col-auto ms-auto">
+            <ul class="list-inline d-flex">
+              <li class="nav-item ms-2">
+                <select
+                  class="form-select selectDomain"
+                  aria-label="Default select example"
+                >
+                  <option selected>Select Domain</option>
+                  <option value="1">One</option>
+                  <option value="2">Two</option>
+                  <option value="3">Three</option>
+                </select>
+              </li>
+              <li class="nav-item ms-2">
+                <select
+                  class="form-select sortBy"
+                  aria-label="Default select example"
+                >
+                  <option selected>Sort by</option>
+                  <option value="1">One</option>
+                  <option value="2">Two</option>
+                  <option value="3">Three</option>
+                </select>
+              </li>
+              <li class="nav-item ms-2">
+                <input
+                  type="search"
+                  class="form-control searchBySkill"
+                  placeholder="Search"
+                  [(ngModel)]="searchText"
+                />
+              </li>
+
+              <li class="nav-item  ms-2">
+                <button class="btn btn-dark importbtn">
+                  <i class="bi bi-file-earmark-arrow-down me-2"></i>Import Skill
+                </button>
+              </li>
+              <li class="nav-item ms-2">
+                <button
+                  (click)="openModal(content)"
+                  class="btn btn-primary createbtn"
+                >
+                  <i class="bi bi-plus-circle-fill createFont me-2"></i>Create
+                  Skill
+                </button>
+              </li>
+            </ul>
+          </div>
+        </div>
+        <!-- Favourite Section -->
+        <div>
+          <div class="mt-4 mb-3">
+            <h5 class="">Favourites</h5>
+          </div>
+
+          <!-- My FavSkills -->
+          <div class="row">
+            <div
+              class="col col-md-6 col-lg-4 col-xl-3 g-4"
+              *ngFor="let res of favSkills | skillCardSearch : searchText"
+            >
+              <!-- Card -->
+              <div class="card text-center">
+                <div class="card-body">
+                  <div
+                    class="d-flex align-items-center justify-content-between"
+                  >
+                    <div>
+                      <span class="me-2 versiontxt"
+                        >v{{ res.version_number }}
+                        {{ res.state | titlecase }}</span
+                      >
+                      <i class="bi bi-info-circle iIcon me-2"></i>
+                    </div>
+                    <div>
+                      <i
+                        (click)="pinning(res, false)"
+                        class="bi bi-pin-fill favPinIcon me-2"
+                      ></i>
+                      <!-- Material Menu -->
+                      <button
+                        mat-icon-button
+                        [matMenuTriggerFor]="menu"
+                        aria-label="Example icon-button with a menu"
+                      >
+                        <mat-icon class="matmenuIcon">more_vert</mat-icon>
+                      </button>
+                      <mat-menu class="my-class" #menu="matMenu">
+                        <button mat-menu-item>
+                          <mat-icon>share</mat-icon>
+                          <span class="">Share</span>
+                        </button>
+                        <button
+                          (click)="EditopenModel(content, res)"
+                          mat-menu-item
+                        >
+                          <mat-icon>edit</mat-icon>
+                          <span>Edit</span>
+                        </button>
+                        <button mat-menu-item>
+                          <mat-icon
+                            ><i class="bi bi-arrow-90deg-right"></i>
+                          </mat-icon>
+                          <span> Export</span>
+                        </button>
+                        <button mat-menu-item>
+                          <mat-icon><i class="bi bi-copy"></i></mat-icon>
+                          <span>Clone</span>
+                        </button>
+                        <hr />
+                        <button
+                          (click)="isDeleteData = res; openModal(deletecontent)"
+                          mat-menu-item
+                        >
+                          <mat-icon class="text-danger">delete</mat-icon>
+                          <span class="text-danger">Delete</span>
+                        </button>
+                      </mat-menu>
+                      <!-- End Material Menu -->
+                    </div>
+                  </div>
+
+                  <!-- Skill Image -->
+                  <div>
+                    <div class="mt-2 avatar avatar-circle">
+                      <img
+                        class="img-fluid rounded-pill avatar-img"
+                        [src]="res.pic ? res.pic : 'assets/images/img5.jpg'"
+                        alt="Image Description"
+                      />
+                    </div>
+                  </div>
+                  <!-- End Skill Image -->
+
+                  <div class="">
+                    <h4>{{ res.name }}</h4>
+                    <small class="d-block">Created by</small>
+                    <span class="d-block createrName mb-2">{{
+                      res.created_by
+                    }}</span>
+                    <small class="d-block mb-2"
+                      >Updated on {{ res.updated_on | date }}</small
+                    >
+                  </div>
+
+                  <div *ngIf="res.shared_users.length > 1; else User">
+                    <span class="divider usertxt">
+                      Users
+                      <span class="badge bg-primary ms-1 rounded-pill">{{
+                        res.shared_users.length
+                      }}</span>
+                    </span>
+                  </div>
+                  <ng-template #User>
+                    <span class="divider usertxt">
+                      User
+                      <span class="badge bg-primary ms-1 rounded-pill">{{
+                        res.shared_users.length
+                      }}</span>
+                    </span>
+                  </ng-template>
+
+                  <!-- Shared Users images group -->
+                  <div class="d-flex justify-content-center mt-3">
+                    <div class="usersList">
+                      <a
+                        *ngFor="let i of res.shared_users"
+                        class="avatar avatar-circle avatar-sm"
+                      >
+                        <img
+                          class="rounded-pill avatar-img"
+                          [src]="
+                            i.profile_pic
+                              ? i.profile_pic
+                              : 'assets/images/img4.jpg'
+                          "
+                          alt="res.name"
+                        />
+                      </a>
+                    </div>
+                  </div>
+                </div>
+                <!-- Card Footer -->
+                <div class="card-footer footertxt text-center bg-white p-3">
+                  <div class="row">
+                    <div class="col">
+                      <h6 class="m-1">1</h6>
+                      <span>Domains</span>
+                    </div>
+                    <div class="col col-divider">
+                      <h6 class="m-1">1</h6>
+                      <span>Languages</span>
+                    </div>
+                  </div>
+                </div>
+                <!-- End Card Footer -->
+              </div>
+            </div>
+            <div *ngIf="favSkills.length === 0">
+              <h4 class="text-warning">No Data Available here</h4>
+            </div>
+          </div>
+        </div>
+
+        <!--All Skills Section -->
+        <div>
+          <div class="mt-4 mb-3">
+            <h5 class="">All Skills</h5>
+          </div>
+
+          <!-- My Skills -->
+          <div class="row mb-4">
+            <div
+              class="col col-md-6 col-lg-4 col-xl-3 g-4"
+              *ngFor="let res of allSkills | skillCardSearch : searchText"
+            >
+              <!-- Card -->
+              <div class="card text-center">
+                <div class="card-body">
+                  <div
+                    class="d-flex align-items-center justify-content-between"
+                  >
+                    <div>
+                      <span class="me-2 versiontxt"
+                        >v{{ res.version_number }}
+                        {{ res.state | titlecase }}</span
+                      >
+                      <i class="bi bi-info-circle iIcon me-2"></i>
+                    </div>
+                    <div>
+                      <i
+                        id="favPin"
+                        (click)="pinning(res, true)"
+                        class="bi bi-pin-fill favPinIcon me-2"
+                      ></i>
+                      <!-- Material Menu -->
+                      <button
+                        mat-icon-button
+                        [matMenuTriggerFor]="menu"
+                        aria-label="Example icon-button with a menu"
+                      >
+                        <mat-icon class="matmenuIcon">more_vert</mat-icon>
+                      </button>
+                      <mat-menu #menu="matMenu">
+                        <button mat-menu-item>
+                          <mat-icon>share</mat-icon>
+                          <span>Share</span>
+                        </button>
+                        <button
+                          (click)="EditopenModel(content, res)"
+                          mat-menu-item
+                        >
+                          <mat-icon>edit</mat-icon>
+                          <span>Edit</span>
+                        </button>
+                        <button mat-menu-item>
+                          <mat-icon
+                            ><i class="bi bi-arrow-90deg-right"></i>
+                          </mat-icon>
+                          <span>Export</span>
+                        </button>
+                        <button mat-menu-item>
+                          <mat-icon><i class="bi bi-copy"></i></mat-icon>
+                          <span>Clone</span>
+                        </button>
+                        <hr />
+                        <button
+                          (click)="isDeleteData = res; openModal(deletecontent)"
+                          mat-menu-item
+                        >
+                          <mat-icon class="text-danger">delete</mat-icon>
+                          <span class="text-danger">Delete</span>
+                        </button>
+                      </mat-menu>
+                      <!-- End Material Menu -->
+                    </div>
+                  </div>
+
+                  <!-- Skill Image -->
+                  <div>
+                    <div class="avatar avatar-circle">
+                      <img
+                        class="img-fluid rounded-pill avatar-img"
+                        [src]="res.pic ? res.pic : 'assets/images/img5.jpg'"
+                        alt="Image Description"
+                      />
+                    </div>
+                  </div>
+                  <!-- End Skill Image -->
+
+                  <div class="">
+                    <h4>{{ res.name }}</h4>
+                    <small class="d-block">Created by</small>
+                    <span class="d-block createrName mb-2">{{
+                      res.created_by
+                    }}</span>
+                    <small class="d-block mb-2"
+                      >Updated on {{ res.updated_on | date }}</small
+                    >
+                  </div>
+
+                  <div *ngIf="res.shared_users.length > 1; else User">
+                    <span class="divider usertxt">
+                      Users
+                      <span class="badge bg-primary ms-1 rounded-pill">{{
+                        res.shared_users.length
+                      }}</span>
+                    </span>
+                  </div>
+                  <ng-template #User>
+                    <span class="divider usertxt">
+                      User
+                      <span class="badge bg-primary ms-1 rounded-pill">{{
+                        res.shared_users.length
+                      }}</span>
+                    </span>
+                  </ng-template>
+
+                  <!-- Shared Users images group -->
+                  <div class="d-flex justify-content-center mt-3">
+                    <div class="usersList">
+                      <a
+                        class="avatar avatar-circle avatar-sm"
+                        *ngFor="let i of res.shared_users"
+                      >
+                        <img
+                          class="rounded-pill avatar-img"
+                          [src]="
+                            i.profile_pic
+                              ? i.profile_pic
+                              : 'assets/images/img4.jpg'
+                          "
+                          alt="usersimg"
+                        />
+                      </a>
+                    </div>
+                  </div>
+                </div>
+                <!-- Card Footer -->
+                <div class="card-footer footertxt text-center bg-white p-3">
+                  <div class="row">
+                    <div class="col">
+                      <h6 class="m-1">25</h6>
+                      <span>Domains</span>
+                    </div>
+                    <div class="col col-divider">
+                      <h6 class="m-1">25</h6>
+                      <span>Languages</span>
+                    </div>
+                  </div>
+                </div>
+                <!-- End Card Footer -->
+              </div>
+            </div>
+            <div *ngIf="allSkills.length === 0">
+              <h4 class="text-warning">No Data Available here</h4>
+            </div>
+          </div>
+        </div>
+
+        <!-- Modal PopUp to create card -->
+        <ng-template #content let-c="close" let-d="dismiss">
+          <div class="modal-header">
+            <h4 class="modal-title" id="modal-basic-title">Create Skill!</h4>
+            <button
+              type="button"
+              class="btn-close"
+              aria-label="Close"
+              (click)="d('Cross click')"
+            ></button>
+          </div>
+          <div class="modal-body">
+            <form [formGroup]="skillForm">
+              <div class="mb-2">
+                <label>Skill Name</label>
+                <input
+                  [class.is-invalid]="
+                    skillForm.controls['skillName'].invalid &&
+                    skillForm.controls['skillName'].touched
+                  "
+                  formControlName="skillName"
+                  type="text"
+                  class="form-control"
+                />
+                <span
+                  *ngIf="
+                    skillForm.controls['skillName'].invalid &&
+                    skillForm.controls['skillName'].touched
+                  "
+                  class="text-danger"
+                  >*Required</span
+                >
+              </div>
+              <div class="mb-2">
+                <label>Skill Description</label>
+                <textarea
+                  [class.is-invalid]="
+                    skillForm.controls['skillDescription'].invalid &&
+                    skillForm.controls['skillDescription'].touched
+                  "
+                  formControlName="skillDescription"
+                  type="text"
+                  class="form-control"
+                ></textarea>
+                <span
+                  *ngIf="
+                    skillForm.controls['skillDescription'].invalid &&
+                    skillForm.controls['skillDescription'].touched
+                  "
+                  class="text-danger"
+                  >*Required</span
+                >
+              </div>
+              <div class="mb-2">
+                <label>Skill Pic</label>
+                <input
+                  type="file"
+                  class="form-control"
+                  (change)="onUpload($event)"
+                />
+              </div>
+              <div class="mb-2">
+                <label>Created By</label>
+                <input
+                  formControlName="createdby"
+                  type="text"
+                  class="form-control"
+                />
+              </div>
+            </form>
+          </div>
+
+          <div class="modal-footer">
+            <button
+              type="button"
+              class="btn btn-outline-dark"
+              (click)="savedata()"
+            >
+              Save
+            </button>
+          </div>
+        </ng-template>
+        <!-- End Modal PopUp to create card -->
+
+        <!-- Material Model as Alert  in Delete-->
+
+        <ng-template #deletecontent let-c="close" let-d="dismiss">
+          <div class="modal-header">
+            <h5 class="modal-title" id="modal-basic-title">Delete Skill</h5>
+            <button
+              type="button"
+              class="btn-close"
+              id="close"
+              aria-label="Close"
+              (click)="d('Cross click')"
+            ></button>
+          </div>
+          <div class="modal-body">
+            <h6>Are you sure want to delete this item ?</h6>
+          </div>
+          <div class="modal-footer">
+            <button
+              type="button"
+              class="btn btn-primary"
+              (click)="d('Cross click')"
+            >
+              No
+            </button>
+            <button type="button" class="btn btn-danger" (click)="deletedata()">
+              Yes
+            </button>
+          </div>
+        </ng-template>
+        <!-- Material Model as Alert  in Delete-->
+      </div>
+    </div>
+  </div>
+</main>

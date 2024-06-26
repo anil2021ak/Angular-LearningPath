@@ -1,0 +1,40 @@
+$primaryColor:  rgb(118, 118, 255);
+$whiteColor: white;
+
+
+.logo{
+    width: 180px;
+}
+.buildingIcon{
+    height: 30px;
+}
+
+.nuacemLogo{
+    height: 30px;
+    width: 30px;
+}
+.navName{
+    font-weight: 700;
+    color: $primaryColor;
+}
+
+.avatar {
+    position: relative;
+    display: inline-block;
+    width: 2.625rem;
+    height: 2.625rem;
+    border-radius: 0.5rem;
+    cursor: pointer;
+}
+.avatar:not(img) {
+    background-color: $whiteColor;
+}
+.avatar-circle {
+    border-radius: 50%;
+}
+
+.headlist{
+    list-style: none;
+}
+
+

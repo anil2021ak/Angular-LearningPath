@@ -1,0 +1,34 @@
+
+  <div class="weather-card">
+    <div class="search">
+      <input type="search" [(ngModel)]="city" placeholder="enter city name" spellcheck="false">
+      <button type="button" (click)="checkWeather()">
+        <i class="bi bi-search"></i>
+      </button>
+    </div>
+    <div *ngIf="weatherData" class="weather">
+       
+      <img class="weather-icon" [src]="getWeatherImages(weatherData.weather[0].main)" alt="{{weatherData.name}}">
+      <h1 class="temp">{{weatherData.main.temp}} </h1>
+      <h2 class="city">{{weatherData.name}}</h2>
+      <div class="details">
+        <div class="d-flex col">
+          <img class="humi" src="https://static-00.iconduck.com/assets.00/humidity-icon-2048x1675-xxsge5os.png" alt="{{weatherData.main.humidity}}">
+          <div class="info">
+            <p class="humidity">{{weatherData.main.humidity}}{{humidSymbol}}</p>
+            <p>Humidity</p>
+          </div>
+        </div>
+        <div class="col">
+          <img src="https://cdn-icons-png.flaticon.com/512/136/136712.png" alt="{{weatherData.name}}">
+          <div class="info">
+            <p class="wind">{{weatherData.wind.speed}}{{sppedSymbol}}</p>
+            <p>Wind Speed</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+  <button type="button" [routerLink]="['/skills/chat']" routerLinkActive="router-link-active"   class="btn btn-lg btn-outline-success p-3 me-5 float-end">Chat Box</button>

@@ -1,0 +1,104 @@
+ <nav class="navbar navbar-expand-xl navbar-dark bg-dark p-3" aria-label="Third navbar example">
+  <div class="container-fluid">
+    <a class="navbar-brand">
+      <img class="logo" src="assets/images/wbnlu-logo.svg" alt="logoImg" />
+    </a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarsExample03" aria-controls="navbarsExample03" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse" id="navbarsExample03">
+      <ul class="navbar-nav text-black mx-auto mb-2 mb-sm-0">
+        <li class="nav-item text-black me-3">
+          <a
+            class="nav-link "
+            [routerLink]="['dashboard']"
+            routerLinkActive="active"
+            >Skills Data</a
+          >
+        </li>
+        <li class="nav-item">
+          <a
+            class="nav-link"
+            [routerLink]="['employee']"
+            routerLinkActive="active"
+            >Employee Data</a
+          >
+        </li>
+        <li class="nav-item ms-3">
+          <a
+            class="nav-link"
+            [routerLink]="['skillCard']"
+            routerLinkActive="active"
+            >Clean UI</a
+          >
+        </li>
+        <li class="nav-item ms-3">
+          <a
+            class="nav-link"
+            [routerLink]="['home']" routerLinkActive="active"
+            >Store Card</a
+          >
+        </li>
+        <li class="nav-item ms-3">
+          <a
+            class="nav-link"
+            [routerLink]="['about']" routerLinkActive="active" 
+            >Store Table </a
+          >
+        </li>
+        <li class="nav-item ms-3">
+          <a
+            class="nav-link"
+            [routerLink]="['weather']" routerLinkActive="active" 
+            >Weather & Chat</a
+          >
+        </li>
+        <li class="nav-item ms-3">
+          <a
+            class="nav-link"
+            [routerLink]="['manageData']" routerLinkActive="active" 
+            >ManageData</a
+          >
+        </li>
+        <li class="nav-item ms-3">
+          <a
+            class="nav-link"
+            [routerLink]="['poc']" routerLinkActive="active" 
+            >POC</a
+          >
+        </li>
+        <li class="nav-item ms-3">
+          <a
+            class="nav-link"  
+            [routerLink]="['mainWeather']" routerLinkActive="active" 
+            >Weather</a
+          >
+        </li>
+  
+        
+
+
+        
+      
+        
+      </ul>
+      <div class="d-flex ">
+        <span class="navName mt-2 me-2">Nianlu</span>
+        <span><i class="bi bi-building"></i></span>
+        <span 
+          ><img
+            class="avatar avatar-circle me-3"
+            src="assets/images/cropped-Logo-96x96.png"
+            alt="nuacemLogo" 
+            matTooltip="{{userEmail}}"
+        />
+        <button  (click)="logOut()" class="rounded-pill p-2 btn btn-sm btn-danger ms-2">Log Out</button>
+      </span>
+      
+      </div>
+    </div>
+  </div>
+</nav>
+
+<router-outlet></router-outlet>
