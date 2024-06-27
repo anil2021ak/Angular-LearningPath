@@ -44,14 +44,14 @@ export class LoginComponent implements OnInit {
       password: [null, Validators.required],
     });
   }
-  keepLogin(event: any) {
-    let checked = event.target.checked;
-    console.log("Checked", checked);
-    let storage = sessionStorage.getItem('SessionEmail');
-    if(checked){
+  // keepLogin(event: any) {
+  //   let checked = event.target.checked;
+  //   console.log("Checked", checked);
+  //   let storage = sessionStorage.getItem('SessionEmail');
+  //   if(checked){
       
-    }
-  }
+  //   }
+  // }
   submit(form: FormGroup) {
     let email = form.value.email;
     //let email = form.get('email')?.value

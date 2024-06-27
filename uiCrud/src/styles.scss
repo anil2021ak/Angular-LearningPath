@@ -10,6 +10,8 @@
 
 @import "@ng-select/ng-select/themes/material.theme.css";
 
+@import  "@angular/material/prebuilt-themes/deeppurple-amber.css";
+
 *{
     padding: 0;
     margin: 0;
@@ -22,3 +24,4 @@ body { margin: 0; font-family: Rubik, "Helvetica Neue", sans-serif; }
 .ng-option-selected{
     background:lightyellow!important;
  }
+

@@ -24,9 +24,10 @@ export class NavbarComponent implements OnInit {
    })
   }
 
-  logOut(){
-    localStorage.clear()
-    this.router.navigate(['/login'])
+  logOut(): void {
+    localStorage.removeItem('userEmail'); // Remove specific item from localStorage
+    this.loginService.setUserEmail(''); // Clear userEmail BehaviorSubject
+    this.router.navigate(['/login']);
   }
 
 }
