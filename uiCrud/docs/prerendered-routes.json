@@ -1,0 +1,17 @@
+{
+  "routes": [
+    "/login",
+    "/skills",
+    "/skills/about",
+    "/skills/chat",
+    "/skills/childPoc",
+    "/skills/dashboard",
+    "/skills/employee",
+    "/skills/home",
+    "/skills/mainWeather",
+    "/skills/manageData",
+    "/skills/poc",
+    "/skills/skillCard",
+    "/skills/weather"
+  ]
+}
